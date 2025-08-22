@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('ticket_responses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ticket_id');
-            $table->unsignedBigInteger('user_id');
+            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->longText('content');
             $table->boolean('is_internal')->default(false);
             $table->boolean('is_staff_response')->default(false);
@@ -20,10 +20,6 @@ return new class extends Migration
 
             $table->index(['ticket_id', 'created_at']);
             $table->index(['user_id', 'created_at']);
-
-            // Ajouter les contraintes de clé étrangère après la création de la table
-            $table->foreign('ticket_id')->references('id')->on('tickets')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
