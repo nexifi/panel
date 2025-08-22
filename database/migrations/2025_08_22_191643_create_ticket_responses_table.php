@@ -8,9 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('ticket_responses', function (Blueprint $table) {
+        Schema::create('support_ticket_responses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ticket_id')->constrained()->onDelete('cascade');
+            $table->foreignId('ticket_id')->constrained('support_tickets')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->longText('content');
             $table->boolean('is_internal')->default(false);
@@ -25,6 +25,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('ticket_responses');
+        Schema::dropIfExists('support_ticket_responses');
     }
 };

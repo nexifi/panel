@@ -12,6 +12,8 @@ class TicketResponse extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $table = 'support_ticket_responses';
+
     protected $fillable = [
         'ticket_id',
         'user_id',
