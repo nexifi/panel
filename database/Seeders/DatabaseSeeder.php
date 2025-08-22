@@ -15,5 +15,10 @@ class DatabaseSeeder extends Seeder
         $this->call(EggSeeder::class);
 
         Role::firstOrCreate(['name' => Role::ROOT_ADMIN]);
+        
+        // Ajouter le seeder des tickets si on est en environnement de développement
+        if (app()->environment('local', 'development')) {
+            $this->call(TicketSeeder::class);
+        }
     }
 }

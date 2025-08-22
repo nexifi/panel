@@ -444,4 +444,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return json_decode($this->customization, true) ?? [];
     }
+
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function assignedTickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
+
+    public function ticketResponses(): HasMany
+    {
+        return $this->hasMany(TicketResponse::class);
+    }
 }
