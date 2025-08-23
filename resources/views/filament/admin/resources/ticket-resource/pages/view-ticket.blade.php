@@ -1,14 +1,25 @@
 <x-filament-panels::page>
-    <div class="max-w-7xl mx-auto space-y-12">
-        <!-- En-tête du ticket avec design moderne -->
-        <div class="relative overflow-hidden bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-3xl shadow-2xl">
-            <div class="absolute inset-0 bg-black/10"></div>
-            <div class="relative p-12 text-white">
-                <div class="flex items-center justify-between mb-12">
-                    <div>
-                        <h1 class="text-5xl font-bold mb-4">{{ $this->record->subject }}</h1>
-                        <p class="text-indigo-100 text-2xl">Ticket #{{ $this->record->id }}</p>
-                    </div>
+    <div class="max-w-6xl mx-auto space-y-8">
+        <!-- En-tête du ticket avec design ultra-moderne -->
+        <div class="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-800 rounded-3xl shadow-2xl border border-white/10">
+            <!-- Effet de brillance -->
+            <div class="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-transparent"></div>
+            <!-- Motif de points -->
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 20px 20px;"></div>
+            
+            <div class="relative p-10 text-white">
+                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+                    <!-- Titre et informations principales -->
+                    <div class="flex-1">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
+                                <span class="text-3xl">🎫</span>
+                            </div>
+                            <div>
+                                <p class="text-indigo-200 text-lg font-medium">Ticket de support</p>
+                                <h1 class="text-4xl lg:text-5xl font-bold leading-tight">{{ $this->record->subject }}</h1>
+                            </div>
+                        </div>
                     <div class="flex flex-col items-end space-y-6">
                         <div class="flex space-x-6">
                             <div class="px-8 py-4 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
