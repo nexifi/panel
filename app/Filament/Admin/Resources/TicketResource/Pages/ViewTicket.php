@@ -19,12 +19,22 @@ class ViewTicket extends ViewRecord implements HasForms
 
     protected static string $resource = TicketResource::class;
 
+    // Utiliser notre vue personnalisée
+    protected static string $view = 'filament.admin.resources.ticket-resource.pages.view-ticket';
+
     public ?array $data = [];
 
     public function mount(int|string $record): void
     {
         $this->record = $this->resolveRecord($record);
         $this->form->fill();
+        
+        // Log pour debug
+        \Log::info('ViewTicket mounted', [
+            'record_id' => $this->record->id,
+            'subject' => $this->record->subject,
+            'responses_count' => $this->record->responses()->count()
+        ]);
     }
 
     public function getFormStatePath(): string
@@ -101,6 +111,14 @@ class ViewTicket extends ViewRecord implements HasForms
         
         // Les réponses suivantes (excluant le message initial)
         $followUpResponses = $allResponses->skip(1);
+
+        // Log pour debug
+        \Log::info('ViewTicket getViewData', [
+            'ticket_id' => $ticket->id,
+            'responses_count' => $allResponses->count(),
+            'initial_response_exists' => $initialResponse ? true : false,
+            'follow_up_count' => $followUpResponses->count()
+        ]);
 
         return [
             'ticket' => $ticket,
