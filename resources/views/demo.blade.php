@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Démonstration - Panel Client</title>
+    <title>Démonstration - Création de Ticket</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50">
@@ -13,210 +13,117 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-16">
                     <div class="flex items-center">
-                        <h1 class="text-xl font-semibold text-gray-900">🎫 Panel Client - Démonstration</h1>
+                        <h1 class="text-xl font-semibold text-gray-900">🎫 Démonstration - Création de Ticket</h1>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <span class="text-sm text-gray-500">Connecté en tant que : <strong>client@test.com</strong></span>
-                        <button class="bg-red-600 text-white px-4 py-2 rounded-md text-sm hover:bg-red-700">
-                            Déconnexion
-                        </button>
+                        <a href="/client" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700">
+                            Retour au Panel Client
+                        </a>
                     </div>
                 </div>
             </div>
         </header>
 
-        <!-- Navigation -->
-        <nav class="bg-white shadow-sm border-b border-gray-200">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex space-x-8">
-                    <a href="#" class="border-b-2 border-blue-500 text-blue-600 px-3 py-4 text-sm font-medium">
-                        🏠 Accueil
-                    </a>
-                    <a href="#" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 px-3 py-4 text-sm font-medium">
-                        🎫 Mes Tickets
-                    </a>
-                    <a href="#" class="border-b-2 border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 px-3 py-4 text-sm font-medium">
-                        ➕ Nouveau Ticket
-                    </a>
-                </div>
-            </div>
-        </nav>
-
         <!-- Main Content -->
-        <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <!-- Widgets de résumé -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-blue-100 rounded-md flex items-center justify-center">
-                                    <span class="text-blue-600 text-lg">🎫</span>
-                                </div>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">Total des tickets</dt>
-                                    <dd class="text-lg font-medium text-gray-900">3</dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-yellow-100 rounded-md flex items-center justify-center">
-                                    <span class="text-yellow-600 text-lg">⏳</span>
-                                </div>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">Tickets ouverts</dt>
-                                    <dd class="text-lg font-medium text-gray-900">2</dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bg-white overflow-hidden shadow rounded-lg">
-                    <div class="p-5">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0">
-                                <div class="w-8 h-8 bg-green-100 rounded-md flex items-center justify-center">
-                                    <span class="text-green-600 text-lg">✅</span>
-                                </div>
-                            </div>
-                            <div class="ml-5 w-0 flex-1">
-                                <dl>
-                                    <dt class="text-sm font-medium text-gray-500 truncate">Tickets fermés</dt>
-                                    <dd class="text-lg font-medium text-gray-900">1</dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Actions rapides -->
-            <div class="bg-white shadow rounded-lg p-6 mb-8">
-                <h2 class="text-lg font-medium text-gray-900 mb-4">Actions rapides</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2">
-                        <span>➕</span>
-                        <span>Créer un nouveau ticket</span>
-                    </button>
-                    <button class="w-full bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors flex items-center justify-center space-x-2">
-                        <span>👁️</span>
-                        <span>Voir tous mes tickets</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Liste des tickets récents -->
-            <div class="bg-white shadow rounded-lg">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h2 class="text-lg font-medium text-gray-900">Mes tickets récents</h2>
-                </div>
-                <div class="divide-y divide-gray-200">
-                    <!-- Ticket 1 -->
-                    <div class="px-6 py-4 hover:bg-gray-50">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1">
-                                <h3 class="text-sm font-medium text-gray-900">Problème de connexion à l'API</h3>
-                                <p class="text-sm text-gray-500 mt-1">Créé le 23/08/2025 à 10:30</p>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                    En cours
-                                </span>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    Moyenne
-                                </span>
-                                <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                                    Voir →
-                                </button>
-                            </div>
+        <main class="max-w-4xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div class="bg-white shadow rounded-lg p-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Comment créer un ticket</h2>
+                
+                <div class="space-y-6">
+                    <!-- Étape 1 -->
+                    <div class="border-l-4 border-blue-500 pl-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">1. Accédez au Panel Client</h3>
+                        <p class="text-gray-600 mb-3">
+                            Connectez-vous à votre espace client via <code class="bg-gray-100 px-2 py-1 rounded">/client</code>
+                        </p>
+                        <div class="bg-blue-50 border border-blue-200 rounded p-3">
+                            <p class="text-blue-800 text-sm">
+                                <strong>Note :</strong> Vous devez être connecté pour créer des tickets
+                            </p>
                         </div>
                     </div>
 
-                    <!-- Ticket 2 -->
-                    <div class="px-6 py-4 hover:bg-gray-50">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1">
-                                <h3 class="text-sm font-medium text-gray-900">Demande de fonctionnalité</h3>
-                                <p class="text-sm text-gray-500 mt-1">Créé le 22/08/2025 à 15:45</p>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    Ouvert
-                                </span>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
-                                    Haute
-                                </span>
-                                <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                                    Voir →
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ticket 3 -->
-                    <div class="px-6 py-4 hover:bg-gray-50">
-                        <div class="flex items-center justify-between">
-                            <div class="flex-1">
-                                <h3 class="text-sm font-medium text-gray-900">Question sur la facturation</h3>
-                                <p class="text-sm text-gray-500 mt-1">Créé le 20/08/2025 à 09:15</p>
-                            </div>
-                            <div class="flex items-center space-x-3">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
-                                    Fermé
-                                </span>
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                    Moyenne
-                                </span>
-                                <button class="text-blue-600 hover:text-blue-800 text-sm font-medium">
-                                    Voir →
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Guide d'utilisation -->
-            <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-8">
-                <h3 class="text-lg font-medium text-blue-900 mb-4">💡 Comment utiliser le panel client</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-blue-600 font-bold text-lg">1</span>
-                        </div>
-                        <h4 class="font-medium text-blue-900 mb-2">Créez votre ticket</h4>
-                        <p class="text-sm text-blue-700">
-                            Cliquez sur "Créer un nouveau ticket" et décrivez votre problème
+                    <!-- Étape 2 -->
+                    <div class="border-l-4 border-green-500 pl-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">2. Cliquez sur "Nouveau Ticket"</h3>
+                        <p class="text-gray-600 mb-3">
+                            Utilisez le bouton "Nouveau Ticket" ou naviguez vers <code class="bg-gray-100 px-2 py-1 rounded">/client/tickets/create</code>
                         </p>
                     </div>
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-blue-600 font-bold text-lg">2</span>
+
+                    <!-- Étape 3 -->
+                    <div class="border-l-4 border-purple-500 pl-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">3. Remplissez le formulaire</h3>
+                        <div class="bg-gray-50 rounded p-4 space-y-3">
+                            <div>
+                                <strong class="text-gray-900">Sujet :</strong>
+                                <span class="text-gray-600">Titre court et descriptif de votre problème</span>
+                            </div>
+                            <div>
+                                <strong class="text-gray-900">Priorité :</strong>
+                                <span class="text-gray-600">Choisissez selon l'urgence (Basse, Moyenne, Haute, Urgente)</span>
+                            </div>
+                            <div>
+                                <strong class="text-gray-900">Catégorie :</strong>
+                                <span class="text-gray-600">Type de problème (Technique, Facturation, Général, Bug, Fonctionnalité)</span>
+                            </div>
+                            <div>
+                                <strong class="text-gray-900">Message :</strong>
+                                <span class="text-gray-600">Description détaillée de votre problème (minimum 10 caractères)</span>
+                            </div>
                         </div>
-                        <h4 class="font-medium text-blue-900 mb-2">Suivez l'évolution</h4>
-                        <p class="text-sm text-blue-700">
-                            Consultez les réponses de notre équipe en temps réel
+                    </div>
+
+                    <!-- Étape 4 -->
+                    <div class="border-l-4 border-orange-500 pl-4">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">4. Soumettez votre ticket</h3>
+                        <p class="text-gray-600 mb-3">
+                            Cliquez sur "Créer" pour envoyer votre ticket. Vous recevrez une confirmation.
                         </p>
                     </div>
-                    <div class="text-center">
-                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span class="text-blue-600 font-bold text-lg">3</span>
+
+                    <!-- Conseils -->
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-yellow-900 mb-3">💡 Conseils pour un bon ticket</h3>
+                        <ul class="text-yellow-800 space-y-2 text-sm">
+                            <li>• <strong>Soyez précis</strong> dans votre description</li>
+                            <li>• <strong>Incluez les étapes</strong> pour reproduire le problème</li>
+                            <li>• <strong>Mentionnez les messages d'erreur</strong> si applicable</li>
+                            <li>• <strong>Précisez votre environnement</strong> (navigateur, système d'exploitation, etc.)</li>
+                            <li>• <strong>Une image vaut mille mots</strong> - ajoutez des captures d'écran si possible</li>
+                        </ul>
+                    </div>
+
+                    <!-- Exemple de bon ticket -->
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-green-900 mb-3">✅ Exemple de bon ticket</h3>
+                        <div class="bg-white rounded p-3 space-y-2 text-sm">
+                            <div><strong>Sujet :</strong> Impossible de me connecter à mon serveur Minecraft</div>
+                            <div><strong>Priorité :</strong> Haute</div>
+                            <div><strong>Catégorie :</strong> Problème technique</div>
+                            <div><strong>Message :</strong></div>
+                            <div class="bg-gray-100 p-2 rounded text-gray-700">
+                                Bonjour,<br><br>
+                                Je n'arrive plus à me connecter à mon serveur Minecraft depuis hier soir. Voici les détails :<br><br>
+                                • <strong>Nom du serveur :</strong> MonServeur<br>
+                                • <strong>Adresse IP :</strong> 192.168.1.100<br>
+                                • <strong>Port :</strong> 25565<br>
+                                • <strong>Message d'erreur :</strong> "Connection refused"<br>
+                                • <strong>Dernière connexion réussie :</strong> Hier à 18h30<br><br>
+                                J'ai vérifié que mon pare-feu n'a pas changé et que mon réseau fonctionne normalement. Pouvez-vous vérifier l'état du serveur ?<br><br>
+                                Merci d'avance pour votre aide.
+                            </div>
                         </div>
-                        <h4 class="font-medium text-blue-900 mb-2">Répondez si besoin</h4>
-                        <p class="text-sm text-blue-700">
-                            Ajoutez des informations ou posez des questions
-                        </p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="flex justify-center space-x-4 pt-6">
+                        <a href="/client" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                            Accéder au Panel Client
+                        </a>
+                        <a href="/client/tickets/create" class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                            Créer un Ticket Maintenant
+                        </a>
                     </div>
                 </div>
             </div>

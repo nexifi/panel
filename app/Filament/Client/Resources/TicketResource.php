@@ -43,7 +43,8 @@ class TicketResource extends Resource
                             ->label('Sujet')
                             ->required()
                             ->maxLength(255)
-                            ->placeholder('Décrivez brièvement votre problème'),
+                            ->placeholder('Décrivez brièvement votre problème')
+                            ->helperText('Donnez un titre clair à votre demande'),
                         
                         Forms\Components\Select::make('priority')
                             ->label('Priorité')
@@ -54,7 +55,8 @@ class TicketResource extends Resource
                                 'urgent' => 'Urgente'
                             ])
                             ->default('medium')
-                            ->required(),
+                            ->required()
+                            ->helperText('Choisissez la priorité selon l\'urgence de votre demande'),
                         
                         Forms\Components\Select::make('category')
                             ->label('Catégorie')
@@ -65,16 +67,24 @@ class TicketResource extends Resource
                                 'bug' => 'Signalement de bug',
                                 'feature' => 'Demande de fonctionnalité'
                             ])
-                            ->placeholder('Sélectionnez une catégorie'),
-                        
-                        Forms\Components\Textarea::make('content')
-                            ->label('Description détaillée')
-                            ->required()
-                            ->rows(6)
-                            ->placeholder('Décrivez votre problème en détail...')
-                            ->columnSpanFull(),
+                            ->placeholder('Sélectionnez une catégorie')
+                            ->helperText('Cela nous aide à traiter votre demande plus efficacement'),
                     ])
                     ->columns(2),
+                
+                Forms\Components\Section::make('Description détaillée')
+                    ->description('Décrivez votre problème ou votre demande en détail pour nous permettre de vous aider au mieux')
+                    ->schema([
+                        Forms\Components\Textarea::make('content')
+                            ->label('Votre message')
+                            ->required()
+                            ->rows(8)
+                            ->minLength(10)
+                            ->maxLength(5000)
+                            ->placeholder('Décrivez votre problème en détail... Incluez toutes les informations utiles comme :\n• Ce qui ne fonctionne pas\n• Ce que vous essayez de faire\n• Les étapes que vous avez suivies\n• Les messages d\'erreur si applicable')
+                            ->helperText('Plus votre description est détaillée, plus nous pourrons vous aider rapidement')
+                            ->columnSpanFull(),
+                    ]),
             ]);
     }
 
@@ -85,7 +95,8 @@ class TicketResource extends Resource
                 Tables\Columns\TextColumn::make('subject')
                     ->label('Sujet')
                     ->searchable()
-                    ->limit(50),
+                    ->limit(50)
+                    ->tooltip(fn (Ticket $record): string => $record->subject),
                 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Statut')
@@ -123,6 +134,18 @@ class TicketResource extends Resource
                         default => $state,
                     }),
                 
+                Tables\Columns\TextColumn::make('category')
+                    ->label('Catégorie')
+                    ->searchable()
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'technical' => 'Technique',
+                        'billing' => 'Facturation',
+                        'general' => 'Général',
+                        'bug' => 'Bug',
+                        'feature' => 'Fonctionnalité',
+                        default => $state,
+                    }),
+                
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Créé le')
                     ->dateTime('d/m/Y H:i')
@@ -150,6 +173,15 @@ class TicketResource extends Resource
                         'medium' => 'Moyenne',
                         'high' => 'Haute',
                         'urgent' => 'Urgente',
+                    ]),
+                Tables\Filters\SelectFilter::make('category')
+                    ->label('Catégorie')
+                    ->options([
+                        'technical' => 'Problème technique',
+                        'billing' => 'Facturation',
+                        'general' => 'Question générale',
+                        'bug' => 'Signalement de bug',
+                        'feature' => 'Demande de fonctionnalité'
                     ]),
             ])
             ->actions([
