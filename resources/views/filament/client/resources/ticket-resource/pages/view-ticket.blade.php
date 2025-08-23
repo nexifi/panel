@@ -7,47 +7,46 @@
                     {{ $this->getViewData()['ticket']->subject }}
                 </h2>
                 <div class="flex items-center space-x-3">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                        @if($this->getViewData()['ticket']->status === 'open') bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200
-                        @elseif($this->getViewData()['ticket']->status === 'in_progress') bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200
-                        @elseif($this->getViewData()['ticket']->status === 'waiting') bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
-                        @else bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200
-                        @endif">
-                        @if($this->getViewData()['ticket']->status === 'open') Ouvert
-                        @elseif($this->getViewData()['ticket']->status === 'in_progress') En cours
-                        @elseif($this->getViewData()['ticket']->status === 'waiting') En attente
-                        @else Fermé
-                        @endif
-                    </span>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                        @if($this->getViewData()['ticket']->priority === 'urgent') bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200
-                        @elseif($this->getViewData()['ticket']->priority === 'high') bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200
-                        @elseif($this->getViewData()['ticket']->priority === 'medium') bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200
-                        @else bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200
-                        @endif">
-                        @if($this->getViewData()['ticket']->priority === 'urgent') Urgente
-                        @elseif($this->getViewData()['ticket']->priority === 'high') Haute
-                        @elseif($this->getViewData()['ticket']->priority === 'medium') Moyenne
-                        @else Basse
-                        @endif
-                    </span>
+                    <x-filament::badge :color="$this->getViewData()['ticket']->status === 'open' ? 'success' : ($this->getViewData()['ticket']->status === 'in_progress' ? 'warning' : ($this->getViewData()['ticket']->status === 'waiting' ? 'info' : 'danger'))">
+                        {{ match($this->getViewData()['ticket']->status) {
+                            'open' => 'Ouvert',
+                            'in_progress' => 'En cours',
+                            'waiting' => 'En attente',
+                            'closed' => 'Fermé',
+                        } }}
+                    </x-filament::badge>
+                    <x-filament::badge :color="$this->getViewData()['ticket']->priority === 'low' ? 'success' : ($this->getViewData()['ticket']->priority === 'medium' ? 'info' : ($this->getViewData()['ticket']->priority === 'high' ? 'warning' : 'danger'))">
+                        {{ match($this->getViewData()['ticket']->priority) {
+                            'low' => 'Basse',
+                            'medium' => 'Moyenne',
+                            'high' => 'Haute',
+                            'urgent' => 'Urgente',
+                        } }}
+                    </x-filament::badge>
                 </div>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 dark:text-gray-400">
                 <div>
                     <span class="font-medium">Créé le :</span>
-                    {{ $this->getViewData()['ticket']->created_at->format('d/m/Y à H:i') }}
+                    <span class="ml-2">{{ \Carbon\Carbon::parse($this->getViewData()['ticket']->created_at)->format('d/m/Y H:i') }}</span>
                 </div>
                 @if($this->getViewData()['ticket']->category)
                 <div>
                     <span class="font-medium">Catégorie :</span>
-                    {{ ucfirst($this->getViewData()['ticket']->category) }}
+                    <span class="ml-2">{{ match($this->getViewData()['ticket']->category) {
+                        'general' => 'Général',
+                        'technical' => 'Technique',
+                        'billing' => 'Facturation',
+                        'bug' => 'Bug',
+                        'feature' => 'Fonctionnalité',
+                        'other' => 'Autre',
+                    } }}</span>
                 </div>
                 @endif
                 <div>
                     <span class="font-medium">Dernière mise à jour :</span>
-                    {{ $this->getViewData()['ticket']->updated_at->format('d/m/Y à H:i') }}
+                    <span class="ml-2">{{ \Carbon\Carbon::parse($this->getViewData()['ticket']->updated_at)->format('d/m/Y H:i') }}</span>
                 </div>
             </div>
         </div>
@@ -70,8 +69,9 @@
                         <span class="font-medium text-gray-900 dark:text-white">
                             {{ $this->getViewData()['initialResponse']->user->username }}
                         </span>
+                        <x-filament::badge color="success" size="sm">Client</x-filament::badge>
                         <span class="text-sm text-gray-500">
-                            {{ $this->getViewData()['initialResponse']->created_at->format('d/m/Y à H:i') }}
+                            {{ \Carbon\Carbon::parse($this->getViewData()['initialResponse']->created_at)->format('d/m/Y H:i') }}
                         </span>
                     </div>
                 </div>
@@ -91,21 +91,24 @@
             <div class="space-y-4">
                 @if($this->getViewData()['followUpResponses']->count() > 0)
                     @foreach($this->getViewData()['followUpResponses'] as $response)
-                    <div class="border-l-4 border-blue-500 pl-4 py-2
-                        @if($response->is_staff_response) border-green-500 @endif">
+                    <div class="border-l-4 {{ $response->is_staff_response ? 'border-green-500' : 'border-blue-500' }} pl-4 py-2">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center space-x-2">
                                 <span class="font-medium text-gray-900 dark:text-white">
-                                    @if($response->is_staff_response)
-                                        <span class="text-green-600 dark:text-green-400">👨‍💼 Support</span>
-                                    @else
-                                        <span class="text-blue-600 dark:text-blue-400">👤 Vous</span>
-                                    @endif
+                                    {{ $response->user->username }}
                                 </span>
-                                <span class="text-sm text-gray-500">
-                                    {{ $response->created_at->format('d/m/Y à H:i') }}
-                                </span>
+                                @if($response->is_staff_response)
+                                    <x-filament::badge color="info" size="sm">Équipe</x-filament::badge>
+                                @else
+                                    <x-filament::badge color="success" size="sm">Utilisateur</x-filament::badge>
+                                @endif
+                                @if($response->is_internal)
+                                    <x-filament::badge color="warning" size="sm">Interne</x-filament::badge>
+                                @endif
                             </div>
+                            <span class="text-sm text-gray-500">
+                                {{ \Carbon\Carbon::parse($response->created_at)->format('d/m/Y H:i') }}
+                            </span>
                         </div>
                         <div class="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
                             {{ $response->content }}
