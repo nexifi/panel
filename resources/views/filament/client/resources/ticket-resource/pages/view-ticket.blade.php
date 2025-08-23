@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <div class="max-w-5xl mx-auto space-y-6">
+    <div class="max-w-full mx-auto space-y-6 px-4">
         <!-- En-tête moderne et épuré -->
         <div class="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 rounded-2xl p-8 border border-slate-700/50">
             <div class="flex items-center justify-between mb-6">
@@ -35,31 +35,31 @@
             </div>
             
             <!-- Informations rapides -->
-            <div class="grid grid-cols-3 gap-4">
-                <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
-                    <div class="flex items-center gap-3">
-                        <span class="text-blue-400 text-lg">📅</span>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <div class="flex items-center gap-4">
+                        <span class="text-blue-400 text-2xl">📅</span>
                         <div>
-                            <p class="text-slate-400 text-xs uppercase">Créé le</p>
-                            <p class="text-white font-medium">{{ \Carbon\Carbon::parse($this->getViewData()['ticket']->created_at)->format('d/m/Y H:i') }}</p>
+                            <p class="text-slate-400 text-sm uppercase font-medium">Créé le</p>
+                            <p class="text-white font-semibold text-lg">{{ \Carbon\Carbon::parse($this->getViewData()['ticket']->created_at)->format('d/m/Y H:i') }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
-                    <div class="flex items-center gap-3">
-                        <span class="text-green-400 text-lg">🔄</span>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <div class="flex items-center gap-4">
+                        <span class="text-green-400 text-2xl">🔄</span>
                         <div>
-                            <p class="text-slate-400 text-xs uppercase">Mis à jour</p>
-                            <p class="text-white font-medium">{{ \Carbon\Carbon::parse($this->getViewData()['ticket']->updated_at)->format('d/m/Y H:i') }}</p>
+                            <p class="text-slate-400 text-sm uppercase font-medium">Mis à jour</p>
+                            <p class="text-white font-semibold text-lg">{{ \Carbon\Carbon::parse($this->getViewData()['ticket']->updated_at)->format('d/m/Y H:i') }}</p>
                         </div>
                     </div>
                 </div>
-                <div class="bg-slate-800/50 rounded-lg p-4 border border-slate-700/50">
-                    <div class="flex items-center gap-3">
-                        <span class="text-purple-400 text-lg">💬</span>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <div class="flex items-center gap-4">
+                        <span class="text-purple-400 text-2xl">💬</span>
                         <div>
-                            <p class="text-slate-400 text-xs uppercase">Réponses</p>
-                            <p class="text-white font-medium">{{ $this->getViewData()['allResponses']->count() }}</p>
+                            <p class="text-slate-400 text-sm uppercase font-medium">Réponses</p>
+                            <p class="text-white font-semibold text-lg">{{ $this->getViewData()['allResponses']->count() }}</p>
                         </div>
                     </div>
                 </div>
@@ -76,22 +76,22 @@
                 </h3>
             </div>
             
-            <div class="p-6">
-                <div class="flex items-center gap-4 mb-4">
-                    <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold">
+            <div class="p-8">
+                <div class="flex items-center gap-6 mb-6">
+                    <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-xl">
                         {{ strtoupper(substr($this->getViewData()['initialResponse']->user->username, 0, 2)) }}
                     </div>
                     <div>
-                        <p class="font-semibold text-gray-900 dark:text-white">{{ $this->getViewData()['initialResponse']->user->username }}</p>
-                        <div class="flex items-center gap-2 text-sm text-gray-500">
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">👤 Client</span>
-                            <span>{{ \Carbon\Carbon::parse($this->getViewData()['initialResponse']->created_at)->format('d/m/Y à H:i') }}</span>
+                        <p class="font-bold text-xl text-gray-900 dark:text-white">{{ $this->getViewData()['initialResponse']->user->username }}</p>
+                        <div class="flex items-center gap-3 mt-2">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-medium">👤 Client</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ \Carbon\Carbon::parse($this->getViewData()['initialResponse']->created_at)->format('d/m/Y à H:i') }}</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <p class="text-gray-800 dark:text-gray-200">{{ $this->getViewData()['initialResponse']->content }}</p>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
+                    <p class="text-gray-800 dark:text-gray-200 text-lg leading-relaxed">{{ $this->getViewData()['initialResponse']->content }}</p>
                 </div>
             </div>
         </div>
@@ -106,31 +106,31 @@
                 </h3>
             </div>
             
-            <div class="p-6">
+            <div class="p-8">
                 @if($this->getViewData()['followUpResponses']->count() > 0)
-                    <div class="space-y-4">
+                    <div class="space-y-6">
                         @foreach($this->getViewData()['followUpResponses'] as $response)
-                        <div class="flex items-start gap-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                            <div class="w-10 h-10 {{ $response->is_staff_response ? 'bg-green-500' : 'bg-blue-500' }} rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                        <div class="flex items-start gap-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                            <div class="w-14 h-14 {{ $response->is_staff_response ? 'bg-green-500' : 'bg-blue-500' }} rounded-xl flex items-center justify-center text-white font-bold text-lg">
                                 {{ strtoupper(substr($response->user->username, 0, 2)) }}
                             </div>
                             
                             <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="font-semibold text-gray-900 dark:text-white">{{ $response->user->username }}</span>
-                                    <span class="text-xs px-2 py-1 rounded {{ $response->is_staff_response ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="font-bold text-lg text-gray-900 dark:text-white">{{ $response->user->username }}</span>
+                                    <span class="text-sm px-3 py-1 rounded-lg font-medium {{ $response->is_staff_response ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">
                                         {{ $response->is_staff_response ? '👨‍💼 Support' : '👤 Client' }}
                                     </span>
-                                    <span class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($response->created_at)->format('d/m/Y à H:i') }}</span>
+                                    <span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($response->created_at)->format('d/m/Y à H:i') }}</span>
                                 </div>
-                                <p class="text-gray-700 dark:text-gray-300">{{ $response->content }}</p>
+                                <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">{{ $response->content }}</p>
                             </div>
                         </div>
                         @endforeach
                     </div>
                 @else
-                    <div class="text-center py-8 text-gray-500">
-                        <p>Aucune réponse n'a encore été ajoutée à ce ticket.</p>
+                    <div class="text-center py-12 text-gray-500">
+                        <p class="text-lg">Aucune réponse n'a encore été ajoutée à ce ticket.</p>
                     </div>
                 @endif
             </div>
@@ -146,12 +146,12 @@
                 </h3>
             </div>
             
-            <div class="p-6">
-                <form wire:submit="submit" class="space-y-4">
+            <div class="p-8">
+                <form wire:submit="submit" class="space-y-6">
                     {{ $this->form }}
                     
                     <div class="flex justify-end">
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-colors shadow-lg hover:shadow-xl">
                             Envoyer la réponse
                         </button>
                     </div>

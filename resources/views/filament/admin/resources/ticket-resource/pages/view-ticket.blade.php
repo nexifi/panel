@@ -1,271 +1,163 @@
 <x-filament-panels::page>
-    <div class="max-w-6xl mx-auto space-y-8">
-        <!-- En-tête du ticket avec design ultra-moderne -->
-        <div class="relative overflow-hidden bg-gradient-to-br from-indigo-600 via-purple-700 to-pink-800 rounded-3xl shadow-2xl border border-white/10">
-            <!-- Effet de brillance -->
-            <div class="absolute inset-0 bg-gradient-to-r from-white/5 via-white/10 to-transparent"></div>
-            <!-- Motif de points -->
-            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 20px 20px;"></div>
+    <div class="max-w-full mx-auto space-y-6 px-4">
+        <!-- En-tête moderne et épuré -->
+        <div class="bg-gradient-to-r from-slate-900 via-purple-900 to-slate-900 rounded-2xl p-8 border border-slate-700/50">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <span class="text-2xl">🎫</span>
+                    </div>
+                    <div>
+                        <h1 class="text-3xl font-bold text-white mb-1">{{ $this->record->subject }}</h1>
+                        <p class="text-slate-300">Ticket #{{ $this->record->id }}</p>
+                    </div>
+                </div>
+                
+                <!-- Badges de statut -->
+                <div class="flex gap-3">
+                    <span class="px-4 py-2 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-lg text-sm font-medium">
+                        {{ match($this->record->status) {
+                            'open' => '🔓 Ouvert',
+                            'in_progress' => '⚡ En cours',
+                            'waiting' => '⏳ En attente',
+                            'closed' => '🔒 Fermé',
+                        } }}
+                    </span>
+                    <span class="px-4 py-2 bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 rounded-lg text-sm font-medium">
+                        {{ match($this->record->priority) {
+                            'low' => '🟢 Faible',
+                            'medium' => '🟡 Moyenne',
+                            'high' => '🟠 Haute',
+                            'urgent' => '🔴 Urgente',
+                        } }}
+                    </span>
+                </div>
+            </div>
             
-            <div class="relative p-10 text-white">
-                <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
-                    <!-- Titre et informations principales -->
-                    <div class="flex-1">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
-                                <span class="text-3xl">🎫</span>
-                            </div>
-                            <div>
-                                <p class="text-indigo-200 text-lg font-medium">Ticket de support</p>
-                                <h1 class="text-4xl lg:text-5xl font-bold leading-tight">{{ $this->record->subject }}</h1>
-                            </div>
-                        </div>
-                    <div class="flex flex-col items-end space-y-6">
-                        <div class="flex space-x-6">
-                            <div class="px-8 py-4 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
-                                <span class="text-lg font-medium">
-                                    {{ match($this->record->status) {
-                                        'open' => '🔓 Ouvert',
-                                        'in_progress' => '⚡ En cours',
-                                        'waiting' => '⏳ En attente',
-                                        'closed' => '🔒 Fermé',
-                                    } }}
-                                </span>
-                            </div>
-                            <div class="px-8 py-4 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
-                                <span class="text-lg font-medium">
-                                    {{ match($this->record->priority) {
-                                        'low' => '🟢 Faible',
-                                        'medium' => '🟡 Moyenne',
-                                        'high' => '🟠 Haute',
-                                        'urgent' => '🔴 Urgente',
-                                    } }}
-                                </span>
-                            </div>
-                        </div>
-                        @if($this->record->category)
-                        <div class="px-8 py-4 bg-white/20 backdrop-blur-sm rounded-full border border-white/30">
-                            <span class="text-lg font-medium">
-                                {{ match($this->record->category) {
-                                    'general' => '📋 Général',
-                                    'technical' => '⚙️ Technique',
-                                    'billing' => '💰 Facturation',
-                                    'bug' => '🐛 Bug',
-                                    'feature' => '✨ Fonctionnalité',
-                                    'other' => '📝 Autre',
-                                } }}
-                            </span>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-indigo-100">
-                    <div class="flex items-center space-x-6">
-                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                            <span class="text-white text-2xl">👤</span>
-                        </div>
+            <!-- Informations rapides -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <div class="flex items-center gap-4">
+                        <span class="text-blue-400 text-2xl">📅</span>
                         <div>
-                            <p class="text-base uppercase tracking-wide text-indigo-200">Utilisateur</p>
-                            <p class="font-medium text-xl">{{ $this->record->user->username }}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-6">
-                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                            <span class="text-white text-2xl">📅</span>
-                        </div>
-                        <div>
-                            <p class="text-base uppercase tracking-wide text-indigo-200">Créé le</p>
-                            <p class="font-medium text-xl">{{ $this->record->created_at->format('d/m/Y H:i') }}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-6">
-                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                            <span class="text-white text-2xl">🔄</span>
-                        </div>
-                        <div>
-                            <p class="text-base uppercase tracking-wide text-indigo-200">Dernière mise à jour</p>
-                            <p class="font-medium text-xl">{{ $this->record->updated_at->format('d/m/Y H:i') }}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center space-x-6">
-                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                            <span class="text-white text-2xl">💬</span>
-                        </div>
-                        <div>
-                            <p class="text-base uppercase tracking-wide text-indigo-200">Réponses</p>
-                            <p class="font-medium text-xl">{{ $this->getViewData()['allResponses']->count() }}</p>
+                            <p class="text-slate-400 text-sm uppercase font-medium">Créé le</p>
+                            <p class="text-white font-semibold text-lg">{{ \Carbon\Carbon::parse($this->record->created_at)->format('d/m/Y H:i') }}</p>
                         </div>
                     </div>
                 </div>
-                
-                @if($this->record->assignedUser)
-                <div class="mt-12 pt-12 border-t border-white/20">
-                    <div class="flex items-center space-x-6">
-                        <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                            <span class="text-white text-2xl">👨‍💼</span>
-                        </div>
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <div class="flex items-center gap-4">
+                        <span class="text-green-400 text-2xl">🔄</span>
                         <div>
-                            <p class="text-base uppercase tracking-wide text-indigo-200">Assigné à</p>
-                            <p class="font-medium text-2xl">{{ $this->record->assignedUser->username }}</p>
+                            <p class="text-slate-400 text-sm uppercase font-medium">Mis à jour</p>
+                            <p class="text-white font-semibold text-lg">{{ \Carbon\Carbon::parse($this->record->updated_at)->format('d/m/Y H:i') }}</p>
                         </div>
                     </div>
                 </div>
-                @endif
+                <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+                    <div class="flex items-center gap-4">
+                        <span class="text-purple-400 text-2xl">💬</span>
+                        <div>
+                            <p class="text-slate-400 text-sm uppercase font-medium">Réponses</p>
+                            <p class="text-white font-semibold text-lg">{{ $this->getViewData()['allResponses']->count() }}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Message initial avec design élégant -->
+        <!-- Message initial simplifié -->
         @if($this->getViewData()['initialResponse'])
-        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div class="bg-gradient-to-r from-blue-500 to-blue-600 px-12 py-8">
-                <div class="flex items-center space-x-6">
-                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                        <span class="text-white text-3xl">🎫</span>
-                    </div>
-                    <div>
-                        <h3 class="text-3xl font-semibold text-white">Message initial du ticket</h3>
-                        <p class="text-blue-100 text-xl">Première demande de l'utilisateur</p>
-                    </div>
-                </div>
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="bg-blue-600 px-6 py-4 rounded-t-xl">
+                <h3 class="text-lg font-semibold text-white flex items-center gap-2">
+                    <span>💭</span>
+                    Message initial du ticket
+                </h3>
             </div>
             
-            <div class="p-12">
-                <div class="flex items-center justify-between mb-8">
-                    <div class="flex items-center space-x-6">
-                        <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold text-3xl">
-                            {{ strtoupper(substr($this->getViewData()['initialResponse']->user->username, 0, 2)) }}
-                        </div>
-                        <div>
-                            <p class="font-semibold text-gray-900 dark:text-white text-2xl">
-                                {{ $this->getViewData()['initialResponse']->user->username }}
-                            </p>
-                            <div class="flex items-center space-x-4 mt-3">
-                                <span class="inline-flex items-center px-4 py-2 rounded-full text-base font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                                    👤 Client
-                                </span>
-                                <span class="text-lg text-gray-500">
-                                    {{ \Carbon\Carbon::parse($this->getViewData()['initialResponse']->created_at)->format('d/m/Y à H:i') }}
-                                </span>
-                            </div>
+            <div class="p-8">
+                <div class="flex items-center gap-6 mb-6">
+                    <div class="w-16 h-16 bg-blue-500 rounded-xl flex items-center justify-center text-white font-bold text-xl">
+                        {{ strtoupper(substr($this->getViewData()['initialResponse']->user->username, 0, 2)) }}
+                    </div>
+                    <div>
+                        <p class="font-bold text-xl text-gray-900 dark:text-white">{{ $this->getViewData()['initialResponse']->user->username }}</p>
+                        <div class="flex items-center gap-3 mt-2">
+                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-lg text-sm font-medium">👤 Client</span>
+                            <span class="text-gray-600 dark:text-gray-400">{{ \Carbon\Carbon::parse($this->getViewData()['initialResponse']->created_at)->format('d/m/Y à H:i') }}</span>
                         </div>
                     </div>
                 </div>
                 
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-2xl p-8 border border-gray-200 dark:border-gray-600">
-                    <div class="text-gray-700 dark:text-gray-300 whitespace-pre-wrap text-xl leading-relaxed">
-                        {{ $this->getViewData()['initialResponse']->content }}
-                    </div>
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
+                    <p class="text-gray-800 dark:text-gray-200 text-lg leading-relaxed">{{ $this->getViewData()['initialResponse']->content }}</p>
                 </div>
             </div>
         </div>
         @endif
 
-        <!-- Historique des réponses avec timeline moderne -->
-        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div class="bg-gradient-to-r from-gray-600 to-gray-700 px-12 py-8">
-                <div class="flex items-center space-x-6">
-                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                        <span class="text-white text-3xl">💬</span>
-                    </div>
-                    <div>
-                        <h3 class="text-3xl font-semibold text-white">Conversation</h3>
-                        <p class="text-gray-200 text-xl">Historique des échanges</p>
-                    </div>
-                </div>
+        <!-- Conversation simplifiée -->
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="bg-gray-700 px-6 py-4 rounded-t-xl">
+                <h3 class="text-lg font-semibold text-white flex items-center gap-2">
+                    <span>💬</span>
+                    Conversation
+                </h3>
             </div>
             
-            <div class="p-12">
+            <div class="p-8">
                 @if($this->getViewData()['followUpResponses']->count() > 0)
-                    <div class="space-y-12">
+                    <div class="space-y-6">
                         @foreach($this->getViewData()['followUpResponses'] as $response)
-                        <div class="relative">
-                            <!-- Timeline connector -->
-                            <div class="absolute left-10 top-20 w-1.5 h-10 bg-gray-300 dark:bg-gray-600"></div>
+                        <div class="flex items-start gap-6 p-6 bg-gray-50 dark:bg-gray-700 rounded-xl">
+                            <div class="w-14 h-14 {{ $response->is_staff_response ? 'bg-green-500' : 'bg-blue-500' }} rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                                {{ strtoupper(substr($response->user->username, 0, 2)) }}
+                            </div>
                             
-                            <div class="flex items-start space-x-8">
-                                <div class="flex-shrink-0">
-                                    <div class="w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-3xl {{ $response->is_staff_response 
-                                        ? 'bg-gradient-to-br from-green-500 to-emerald-600' 
-                                        : 'bg-gradient-to-br from-blue-500 to-purple-600' }}">
-                                        {{ strtoupper(substr($response->user->username, 0, 2)) }}
-                                    </div>
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <span class="font-bold text-lg text-gray-900 dark:text-white">{{ $response->user->username }}</span>
+                                    <span class="text-sm px-3 py-1 rounded-lg font-medium {{ $response->is_staff_response ? 'bg-green-100 text-green-800' : 'bg-blue-100 text-blue-800' }}">
+                                        {{ $response->is_staff_response ? '👨‍💼 Support' : '👤 Client' }}
+                                    </span>
+                                    <span class="text-sm text-gray-500">{{ \Carbon\Carbon::parse($response->created_at)->format('d/m/Y à H:i') }}</span>
                                 </div>
-                                
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center justify-between mb-6">
-                                        <div class="flex items-center space-x-6">
-                                            <p class="font-semibold text-gray-900 dark:text-white text-2xl">
-                                                {{ $response->user->username }}
-                                            </p>
-                                            @if($response->is_staff_response)
-                                                <span class="inline-flex items-center px-4 py-2 rounded-full text-base font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                                    👨‍💼 Équipe
-                                                </span>
-                                            @else
-                                                <span class="inline-flex items-center px-4 py-2 rounded-full text-base font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                                                    👤 Client
-                                                </span>
-                                            @endif
-                                            @if($response->is_internal)
-                                                <span class="inline-flex items-center px-4 py-2 rounded-full text-base font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">
-                                                    🔒 Interne
-                                                </span>
-                                            @endif
-                                        </div>
-                                        <span class="text-lg text-gray-500">
-                                            {{ \Carbon\Carbon::parse($response->created_at)->format('d/m/Y à H:i') }}
-                                        </span>
-                                    </div>
-                                    
-                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-2xl p-8 border border-gray-200 dark:border-gray-600">
-                                        <div class="text-gray-700 dark:text-gray-300 whitespace-pre-wrap text-xl leading-relaxed">
-                                            {{ $response->content }}
-                                        </div>
-                                    </div>
-                                </div>
+                                <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed">{{ $response->content }}</p>
                             </div>
                         </div>
                         @endforeach
                     </div>
                 @else
-                    <div class="text-center py-20">
-                        <div class="w-32 h-32 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-8">
-                            <span class="text-gray-400 text-5xl">💬</span>
-                        </div>
-                        <h4 class="text-2xl font-medium text-gray-900 dark:text-white mb-4">Aucune réponse encore</h4>
-                        <p class="text-gray-500 dark:text-gray-400 text-xl">Soyez le premier à répondre à ce ticket !</p>
+                    <div class="text-center py-12 text-gray-500">
+                        <p class="text-lg">Aucune réponse n'a encore été ajoutée à ce ticket.</p>
                     </div>
                 @endif
             </div>
         </div>
 
-        <!-- Formulaire de réponse avec design moderne -->
-        <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 px-12 py-8">
-                <div class="flex items-center space-x-6">
-                    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center">
-                        <span class="text-white text-3xl">✍️</span>
-                    </div>
-                    <div>
-                        <h3 class="text-3xl font-semibold text-white">Ajouter une réponse</h3>
-                        <p class="text-emerald-100 text-xl">Participez à la conversation</p>
-                    </div>
-                </div>
+        <!-- Formulaire simplifié -->
+        @if($this->record->isOpen())
+        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+            <div class="bg-green-600 px-6 py-4 rounded-t-xl">
+                <h3 class="text-lg font-semibold text-white flex items-center gap-2">
+                    <span>✍️</span>
+                    Ajouter une réponse
+                </h3>
             </div>
             
-            <div class="p-12">
-                <form wire:submit="submitResponse" class="space-y-12">
+            <div class="p-8">
+                <form wire:submit="submit" class="space-y-6">
                     {{ $this->form }}
-
+                    
                     <div class="flex justify-end">
-                        <x-filament::button type="submit" size="lg" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 border-0 shadow-xl text-xl px-12 py-6">
-                            <x-heroicon-o-paper-airplane class="w-8 h-8 mr-4" />
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-colors shadow-lg hover:shadow-xl">
                             Envoyer la réponse
-                        </x-filament::button>
+                        </button>
                     </div>
                 </form>
             </div>
         </div>
+        @endif
     </div>
 </x-filament-panels::page>
