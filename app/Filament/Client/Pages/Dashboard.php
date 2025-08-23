@@ -17,6 +17,12 @@ class Dashboard extends BaseDashboard
     {
         return [
             TicketSummary::class,
+        ];
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return [
             ServerSummary::class,
         ];
     }
@@ -36,13 +42,6 @@ class Dashboard extends BaseDashboard
                 ->url(route('filament.client.resources.tickets.index'))
                 ->icon('heroicon-o-ticket')
                 ->color('secondary')
-                ->size('lg'),
-            
-            Action::make('view_servers')
-                ->label('Voir mes serveurs')
-                ->url(route('filament.client.resources.servers.index'))
-                ->icon('heroicon-o-server')
-                ->color('success')
                 ->size('lg'),
         ];
     }

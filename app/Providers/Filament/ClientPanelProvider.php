@@ -62,10 +62,6 @@ class ClientPanelProvider extends PanelProvider
                     ->url('/client/tickets/create')
                     ->icon('heroicon-o-plus-circle')
                     ->isActiveWhen(fn (): bool => request()->routeIs('filament.client.resources.tickets.create')),
-                \Filament\Navigation\NavigationItem::make('Mes Serveurs')
-                    ->url('/client/servers')
-                    ->icon('heroicon-o-server')
-                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.client.resources.servers.*')),
             ]);
     }
 }

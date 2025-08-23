@@ -3,30 +3,107 @@
 namespace App\Filament\Client\Widgets;
 
 use App\Models\Server;
-use Filament\Widgets\StatsOverviewWidget as BaseWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Filament\Widgets\TableWidget as BaseWidget;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Actions\Action;
 
 class ServerSummary extends BaseWidget
 {
-    protected function getStats(): array
+    protected static ?string $heading = 'Mes Serveurs';
+
+    protected int | string | array $columnSpan = 'full';
+
+    public function table(Table $table): Table
     {
-        $userId = auth()->id();
-        
-        return [
-            Stat::make('Total des serveurs', Server::where('owner_id', $userId)->count())
-                ->description('Tous vos serveurs')
-                ->descriptionIcon('heroicon-m-server')
-                ->color('primary'),
-            
-            Stat::make('Serveurs en ligne', Server::where('owner_id', $userId)->where('status', 'online')->count())
-                ->description('Fonctionnels')
-                ->descriptionIcon('heroicon-m-check-circle')
-                ->color('success'),
-            
-            Stat::make('Serveurs hors ligne', Server::where('owner_id', $userId)->where('status', 'offline')->count())
-                ->description('Non fonctionnels')
-                ->descriptionIcon('heroicon-m-exclamation-triangle')
-                ->color('danger'),
-        ];
+        return $table
+            ->query(
+                Server::query()
+                    ->where('owner_id', auth()->id())
+                    ->with(['egg', 'allocation'])
+                    ->orderBy('created_at', 'desc')
+            )
+            ->columns([
+                TextColumn::make('name')
+                    ->label('Nom du serveur')
+                    ->searchable()
+                    ->sortable()
+                    ->limit(30)
+                    ->tooltip(fn (Server $record): string => $record->name),
+                
+                TextColumn::make('egg.name')
+                    ->label('Type de serveur')
+                    ->searchable()
+                    ->sortable(),
+                
+                TextColumn::make('allocation.address')
+                    ->label('Adresse IP')
+                    ->searchable(),
+                
+                TextColumn::make('allocation.port')
+                    ->label('Port')
+                    ->sortable(),
+                
+                TextColumn::make('status')
+                    ->label('Statut')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'running' => 'success',
+                        'stopped' => 'danger',
+                        'starting' => 'warning',
+                        'stopping' => 'warning',
+                        'installing' => 'info',
+                        'install_failed' => 'danger',
+                        'suspended' => 'gray',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                        'running' => 'En ligne',
+                        'stopped' => 'Arrêté',
+                        'starting' => 'Démarrage',
+                        'stopping' => 'Arrêt',
+                        'installing' => 'Installation',
+                        'install_failed' => 'Échec installation',
+                        'suspended' => 'Suspendu',
+                        default => $state,
+                    }),
+                
+                TextColumn::make('created_at')
+                    ->label('Créé le')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable(),
+            ])
+            ->actions([
+                Action::make('view')
+                    ->label('Voir')
+                    ->icon('heroicon-o-eye')
+                    ->url(fn (Server $record): string => route('filament.client.resources.servers.view', $record))
+                    ->color('primary'),
+                
+                Action::make('console')
+                    ->label('Console')
+                    ->icon('heroicon-o-computer-desktop')
+                    ->url(fn (Server $record): string => route('filament.client.resources.servers.console', $record))
+                    ->color('success')
+                    ->visible(fn (Server $record): bool => $record->status === 'running'),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ])
+            ->defaultSort('created_at', 'desc')
+            ->paginated([10, 25, 50])
+            ->emptyStateHeading('Aucun serveur')
+            ->emptyStateDescription('Vous n\'avez pas encore de serveurs.')
+            ->emptyStateActions([
+                Action::make('create_server')
+                    ->label('Créer un serveur')
+                    ->icon('heroicon-o-plus')
+                    ->url(route('filament.client.resources.servers.create'))
+                    ->color('primary'),
+            ]);
     }
 }
