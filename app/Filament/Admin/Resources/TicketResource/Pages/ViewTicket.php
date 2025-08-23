@@ -3,37 +3,39 @@
 namespace App\Filament\Admin\Resources\TicketResource\Pages;
 
 use App\Filament\Admin\Resources\TicketResource;
+use App\Models\Ticket;
 use App\Models\TicketResponse;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
-use Filament\Resources\Pages\ViewRecord;
+use Filament\Resources\Pages\Page;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 
-class ViewTicket extends ViewRecord implements HasForms
+class ViewTicket extends Page implements HasForms
 {
     use InteractsWithForms;
 
     protected static string $resource = TicketResource::class;
 
-    // Utiliser notre vue personnalisée
     protected static string $view = 'filament.admin.resources.ticket-resource.pages.view-ticket';
 
     public ?array $data = [];
+    public $record;
 
     public function mount(int|string $record): void
     {
         $this->record = $this->resolveRecord($record);
         $this->form->fill();
         
-        // Log pour debug
-        \Log::info('ViewTicket mounted', [
+        // Debug visible
+        dd([
             'record_id' => $this->record->id,
             'subject' => $this->record->subject,
-            'responses_count' => $this->record->responses()->count()
+            'responses_count' => $this->record->responses()->count(),
+            'responses' => $this->record->responses()->with('user')->get()->toArray()
         ]);
     }
 
@@ -112,16 +114,8 @@ class ViewTicket extends ViewRecord implements HasForms
         // Les réponses suivantes (excluant le message initial)
         $followUpResponses = $allResponses->skip(1);
 
-        // Log pour debug
-        \Log::info('ViewTicket getViewData', [
-            'ticket_id' => $ticket->id,
-            'responses_count' => $allResponses->count(),
-            'initial_response_exists' => $initialResponse ? true : false,
-            'follow_up_count' => $followUpResponses->count()
-        ]);
-
         return [
-            'ticket' => $ticket,
+            'ticket' => $this->record,
             'initialResponse' => $initialResponse,
             'followUpResponses' => $followUpResponses,
             'allResponses' => $allResponses,
@@ -162,5 +156,10 @@ class ViewTicket extends ViewRecord implements HasForms
         return [
             // Widgets pour afficher les statistiques du ticket
         ];
+    }
+
+    protected function resolveRecord(int|string $record): mixed
+    {
+        return Ticket::findOrFail($record);
     }
 }
