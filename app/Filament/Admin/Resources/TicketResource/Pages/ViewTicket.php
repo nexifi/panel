@@ -29,14 +29,6 @@ class ViewTicket extends Page implements HasForms
     {
         $this->record = $this->resolveRecord($record);
         $this->form->fill();
-        
-        // Debug visible
-        dd([
-            'record_id' => $this->record->id,
-            'subject' => $this->record->subject,
-            'responses_count' => $this->record->responses()->count(),
-            'responses' => $this->record->responses()->with('user')->get()->toArray()
-        ]);
     }
 
     public function getFormStatePath(): string
