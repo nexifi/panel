@@ -53,7 +53,7 @@ class ViewTicket extends Page implements HasForms
                 Checkbox::make('is_staff_response')
                     ->label('Réponse de l\'équipe')
                     ->default(true)
-                    ->disabled(),
+                    ->disabled(false), // Permettre la modification
             ])
             ->statePath('data');
     }
@@ -122,16 +122,20 @@ class ViewTicket extends Page implements HasForms
             return;
         }
 
+        // Valeurs par défaut pour éviter les erreurs
+        $isInternal = $data['is_internal'] ?? false;
+        $isStaffResponse = $data['is_staff_response'] ?? true; // Par défaut true pour l'admin
+
         TicketResponse::create([
             'ticket_id' => $this->record->id,
             'user_id' => auth()->id(),
             'content' => $data['content'],
-            'is_internal' => $data['is_internal'] ?? false,
-            'is_staff_response' => $data['is_staff_response'] ?? true,
+            'is_internal' => $isInternal,
+            'is_staff_response' => $isStaffResponse,
         ]);
 
         // Mettre à jour le statut du ticket si c'est la première réponse du staff
-        if ($this->record->status === 'open' && $data['is_staff_response']) {
+        if ($this->record->status === 'open' && $isStaffResponse) {
             $this->record->update(['status' => 'in_progress']);
         }
 
