@@ -7,7 +7,7 @@ use App\Http\Middleware\RequireTwoFactorAuthentication;
 Route::get('installer', PanelInstaller::class)->name('installer')
     ->withoutMiddleware(['auth', RequireTwoFactorAuthentication::class]);
 
-// Route de test pour le panel client
+// Redirection vers le panel client
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return redirect('/client');
+})->name('home');

@@ -7,13 +7,13 @@
                     Bienvenue sur votre espace client
                 </h1>
                 <p class="text-xl opacity-90">
-                    Gérez vos tickets de support en toute simplicité
+                    Gérez vos tickets de support et vos serveurs en toute simplicité
                 </p>
             </div>
         </div>
 
         <!-- Actions rapides -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center space-x-4">
                     <div class="flex-shrink-0">
@@ -61,6 +61,30 @@
                     </a>
                 </div>
             </div>
+
+            <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                            <x-heroicon-o-server class="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">
+                            Mes serveurs
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400">
+                            Gérez vos serveurs et accédez aux consoles
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="{{ route('filament.client.resources.servers.index') }}" 
+                       class="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm font-medium rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                        Voir mes serveurs
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Informations utiles -->
@@ -68,7 +92,7 @@
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">
                 Comment ça marche ?
             </h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div class="text-center">
                     <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-3">
                         <span class="text-blue-600 dark:text-blue-400 font-bold text-lg">1</span>
@@ -88,8 +112,17 @@
                     </p>
                 </div>
                 <div class="text-center">
+                    <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <span class="text-purple-600 dark:text-purple-400 font-bold text-lg">3</span>
+                    </div>
+                    <h4 class="font-medium text-gray-900 dark:text-white mb-2">Gérez vos serveurs</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        Accédez aux consoles et fichiers
+                    </p>
+                </div>
+                <div class="text-center">
                     <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <span class="text-green-600 dark:text-green-400 font-bold text-lg">3</span>
+                        <span class="text-green-600 dark:text-green-400 font-bold text-lg">4</span>
                     </div>
                     <h4 class="font-medium text-gray-900 dark:text-white mb-2">Résolution</h4>
                     <p class="text-sm text-gray-600 dark:text-gray-400">
