@@ -131,8 +131,7 @@ class TicketResource extends Resource
                     ->label('ID')
                     ->searchable()
                     ->copyable()
-                    ->copyMessage('ID copié')
-                    ->copyMessageTime(1500),
+                    ->copyMessage('ID copié'),
 
                 TextColumn::make('subject')
                     ->label('Sujet')
@@ -144,24 +143,28 @@ class TicketResource extends Resource
                     ->searchable()
                     ->sortable(),
 
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Statut')
-                    ->colors([
-                        'success' => TicketStatus::OPEN->value,
-                        'warning' => TicketStatus::IN_PROGRESS->value,
-                        'info' => TicketStatus::WAITING->value,
-                        'danger' => TicketStatus::CLOSED->value,
-                    ])
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'open' => 'success',
+                        'in_progress' => 'warning',
+                        'waiting' => 'info',
+                        'closed' => 'danger',
+                        default => 'gray',
+                    })
                     ->formatStateUsing(fn (string $state): string => TicketStatus::from($state)->getLabel()),
 
-                BadgeColumn::make('priority')
+                TextColumn::make('priority')
                     ->label('Priorité')
-                    ->colors([
-                        'success' => TicketPriority::LOW->value,
-                        'info' => TicketPriority::MEDIUM->value,
-                        'warning' => TicketPriority::HIGH->value,
-                        'danger' => TicketPriority::URGENT->value,
-                    ])
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'low' => 'success',
+                        'medium' => 'info',
+                        'high' => 'warning',
+                        'urgent' => 'danger',
+                        default => 'gray',
+                    })
                     ->formatStateUsing(fn (string $state): string => TicketPriority::from($state)->getLabel()),
 
                 TextColumn::make('category')
