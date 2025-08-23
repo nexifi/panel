@@ -85,7 +85,7 @@ class ServerSummary extends BaseWidget
                 Action::make('console')
                     ->label('Console')
                     ->icon('heroicon-o-computer-desktop')
-                    ->url(fn (Server $record): string => route('filament.client.resources.servers.console', $record))
+                    ->url(fn (Server $record): string => route('filament.client.resources.servers.view', $record))
                     ->color('success')
                     ->visible(fn (Server $record): bool => $record->status === 'running'),
             ])
@@ -97,12 +97,12 @@ class ServerSummary extends BaseWidget
             ->defaultSort('created_at', 'desc')
             ->paginated([10, 25, 50])
             ->emptyStateHeading('Aucun serveur')
-            ->emptyStateDescription('Vous n\'avez pas encore de serveurs.')
+            ->emptyStateDescription('Vous n\'avez pas encore de serveurs attribués par notre équipe d\'administration.')
             ->emptyStateActions([
-                Action::make('create_server')
-                    ->label('Créer un serveur')
-                    ->icon('heroicon-o-plus')
-                    ->url(route('filament.client.resources.servers.create'))
+                Action::make('contact_support')
+                    ->label('Contacter le support')
+                    ->icon('heroicon-o-chat-bubble-left-right')
+                    ->url(route('filament.client.resources.tickets.create'))
                     ->color('primary'),
             ]);
     }

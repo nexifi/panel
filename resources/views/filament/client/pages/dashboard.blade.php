@@ -32,10 +32,7 @@
             <div class="px-6 py-4 border-b border-gray-200">
                 <div class="flex items-center justify-between">
                     <h3 class="text-lg font-medium text-gray-900">🎮 Mes Serveurs</h3>
-                    <a href="{{ route('filament.client.resources.servers.create') }}" 
-                       class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition-colors">
-                        ➕ Nouveau serveur
-                    </a>
+                    <p class="text-sm text-gray-600">Vos serveurs sont gérés par notre équipe d'administration</p>
                 </div>
             </div>
             <div class="p-6">
