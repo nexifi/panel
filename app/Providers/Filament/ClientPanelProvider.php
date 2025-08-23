@@ -54,18 +54,15 @@ class ClientPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-            ->navigation(function ($navigation) {
-                return $navigation
-                    ->items([
-                        $navigation->item('Mes Tickets')
-                            ->url('/client/tickets')
-                            ->icon('heroicon-o-ticket')
-                            ->isActiveWhen(fn (): bool => request()->routeIs('filament.client.resources.tickets.*')),
-                        $navigation->item('Nouveau Ticket')
-                            ->url('/client/tickets/create')
-                            ->icon('heroicon-o-plus-circle')
-                            ->isActiveWhen(fn (): bool => request()->routeIs('filament.client.resources.tickets.create')),
-                    ]);
-            });
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('Mes Tickets')
+                    ->url('/client/tickets')
+                    ->icon('heroicon-o-ticket')
+                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.client.resources.tickets.*')),
+                \Filament\Navigation\NavigationItem::make('Nouveau Ticket')
+                    ->url('/client/tickets/create')
+                    ->icon('heroicon-o-plus-circle')
+                    ->isActiveWhen(fn (): bool => request()->routeIs('filament.client.resources.tickets.create')),
+            ]);
     }
 }
