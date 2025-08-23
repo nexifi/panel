@@ -7,19 +7,28 @@ use App\Models\TicketResponse;
 use Filament\Actions;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Pages\ViewRecord;
+use Filament\Resources\Pages\Page;
 use Filament\Notifications\Notification;
 
-class ViewTicket extends ViewRecord
+class ViewTicket extends Page
 {
     protected static string $resource = TicketResource::class;
 
+    // Utiliser une vue personnalisée
+    protected static string $view = 'filament.client.resources.ticket-resource.pages.view-ticket';
+
     public ?array $data = [];
+    public $record;
 
     public function mount(int|string $record): void
     {
-        parent::mount($record);
+        $this->record = $this->resolveRecord($record);
         $this->form->fill();
+    }
+
+    protected function resolveRecord(int|string $record): mixed
+    {
+        return \App\Models\Ticket::findOrFail($record);
     }
 
     public function form(Form $form): Form
@@ -32,7 +41,8 @@ class ViewTicket extends ViewRecord
                     ->rows(4)
                     ->placeholder('Tapez votre réponse ici...')
                     ->columnSpanFull(),
-            ]);
+            ])
+            ->statePath('data');
     }
 
     public function submit(): void
@@ -75,6 +85,29 @@ class ViewTicket extends ViewRecord
                 ->submit('submit')
                 ->color('primary')
                 ->icon('heroicon-o-paper-airplane'),
+        ];
+    }
+
+    protected function getViewData(): array
+    {
+        $ticket = $this->record;
+        
+        $allResponses = $ticket->responses()
+            ->with('user')
+            ->orderBy('created_at', 'asc')
+            ->get();
+
+        // Le message initial est la première réponse
+        $initialResponse = $allResponses->first();
+        
+        // Les réponses suivantes (excluant le message initial)
+        $followUpResponses = $allResponses->skip(1);
+
+        return [
+            'ticket' => $ticket,
+            'initialResponse' => $initialResponse,
+            'followUpResponses' => $followUpResponses,
+            'allResponses' => $allResponses,
         ];
     }
 }
