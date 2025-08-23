@@ -130,6 +130,11 @@ class ServerResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make()
                     ->label('Voir'),
+                Tables\Actions\Action::make('files')
+                    ->label('Fichiers')
+                    ->icon('heroicon-o-folder')
+                    ->url(fn (Server $record): string => route('filament.client.resources.servers.files', $record))
+                    ->color('info'),
                 Tables\Actions\Action::make('console')
                     ->label('Console')
                     ->icon('heroicon-o-computer-desktop')
@@ -149,6 +154,7 @@ class ServerResource extends Resource
         return [
             'index' => Pages\ListServers::route('/'),
             'view' => Pages\ViewServer::route('/{record}'),
+            'files' => Pages\FilesServer::route('/{record}/files'),
         ];
     }
 }
