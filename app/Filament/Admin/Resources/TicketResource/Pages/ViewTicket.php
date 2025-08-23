@@ -91,14 +91,22 @@ class ViewTicket extends ViewRecord implements HasForms
     {
         $ticket = $this->record;
         
-        $responses = $ticket->responses()
+        $allResponses = $ticket->responses()
             ->with('user')
             ->orderBy('created_at', 'asc')
             ->get();
 
+        // Le message initial est la première réponse
+        $initialResponse = $allResponses->first();
+        
+        // Les réponses suivantes (excluant le message initial)
+        $followUpResponses = $allResponses->skip(1);
+
         return [
             'ticket' => $ticket,
-            'responses' => $responses,
+            'initialResponse' => $initialResponse,
+            'followUpResponses' => $followUpResponses,
+            'allResponses' => $allResponses,
         ];
     }
 
