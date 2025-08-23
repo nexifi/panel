@@ -6,7 +6,6 @@ use App\Models\Server;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
-use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Actions\Action;
 
@@ -30,8 +29,7 @@ class ServerSummary extends BaseWidget
                     ->label('Nom du serveur')
                     ->searchable()
                     ->sortable()
-                    ->limit(30)
-                    ->tooltip(fn (Server $record): string => $record->name),
+                    ->limit(30),
                 
                 TextColumn::make('egg.name')
                     ->label('Type de serveur')
@@ -46,29 +44,11 @@ class ServerSummary extends BaseWidget
                     ->label('Port')
                     ->sortable(),
                 
-                TextColumn::make('status')
+                TextColumn::make('condition')
                     ->label('Statut')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'running' => 'success',
-                        'stopped' => 'danger',
-                        'starting' => 'warning',
-                        'stopping' => 'warning',
-                        'installing' => 'info',
-                        'install_failed' => 'danger',
-                        'suspended' => 'gray',
-                        default => 'gray',
-                    })
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'running' => 'En ligne',
-                        'stopped' => 'Arrêté',
-                        'starting' => 'Démarrage',
-                        'stopping' => 'Arrêt',
-                        'installing' => 'Installation',
-                        'install_failed' => 'Échec installation',
-                        'suspended' => 'Suspendu',
-                        default => $state,
-                    }),
+                    ->color('gray')
+                    ->formatStateUsing(fn ($state): string => 'Statut'),
                 
                 TextColumn::make('created_at')
                     ->label('Créé le')
@@ -86,8 +66,7 @@ class ServerSummary extends BaseWidget
                     ->label('Console')
                     ->icon('heroicon-o-computer-desktop')
                     ->url(fn (Server $record): string => route('filament.client.resources.servers.view', $record))
-                    ->color('success')
-                    ->visible(fn (Server $record): bool => $record->status === 'running'),
+                    ->color('success'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
